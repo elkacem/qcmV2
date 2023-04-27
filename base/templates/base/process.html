@@ -1,0 +1,62 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="form__action">
+
+    <a class="btn btn--main" type="submit"
+       href="{% url 'download_excel' %}?data={{ df.to_html|urlencode }}&section={{ section.name }}" style="padding">Download Excel</a>
+
+</div>
+
+<style>
+        .center {
+          margin-left: auto;
+          margin-right: auto;
+        }
+        table {
+            display: center;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+
+
+
+
+
+
+</style>
+
+<div class="topics__header">
+    <h2>Results: </h2>
+</div>
+
+
+<table class="center">
+    <thead>
+    <tr>
+        {% for column in df.columns %}
+        <th>{{ column }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in df.values %}
+    <tr>
+        {% for value in row %}
+        <td>{{ value }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

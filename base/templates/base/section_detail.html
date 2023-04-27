@@ -1,0 +1,179 @@
+{% extends 'main.html' %}
+
+{% block content  %}
+
+
+<script>
+  // Redirect the user to the desired page after form submission
+  document.getElementById('my-form').addEventListener('submit', function(event) {
+    event.preventDefault();  // Prevent the form from submitting normally
+    window.location.href = '{% url 'process' section.id %}';  // Redirect to the desired page
+  });
+
+
+</script>
+
+<main class="create-room layout">
+    <div class="container">
+        <div class="layout__box">
+            <div class="layout__boxHeader">
+                <div class="layout__boxTitle">
+                    <a href="{% url 'section-detail' %}">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                             viewBox="0 0 32 32">
+                            <title>arrow-left</title>
+                            <path
+                                    d="M13.723 2.286l-13.723 13.714 13.719 13.714 1.616-1.611-10.96-10.96h27.625v-2.286h-27.625l10.965-10.965-1.616-1.607z">
+                            </path>
+                        </svg>
+                    </a>
+<!--                    <h3>Section number: {{section.id}}</h3>-->
+<!--                    <h3>Section: {{section.name}}</h3>-->
+                    <h3>Number of answer sheets available: {{image_count}}</h3>
+
+<!--                    <a href="{% url 'delete-section' section.id %}">-->
+<!--                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32"-->
+<!--                             viewBox="0 0 32 32">-->
+<!--                            <title>remove</title>-->
+<!--                            <path-->
+<!--                                    d="M27.314 6.019l-1.333-1.333-9.98 9.981-9.981-9.981-1.333 1.333 9.981 9.981-9.981 9.98 1.333 1.333 9.981-9.98 9.98 9.98 1.333-1.333-9.98-9.98 9.98-9.981z"-->
+<!--                            ></path>-->
+<!--                        </svg>-->
+<!--                    </a>-->
+
+
+                </div>
+            </div>
+            <div class="layout__body">
+                <form class="form" action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form__group">
+                        <label for="section_name">Browse your answer sheets: </label>
+                        {{form.image}}
+                    </div>
+
+                    <!-- <div class="form__group">
+                      <label for="room_topic">Topic</label>
+                      <input required type="text" name="topic" id="room_topic" list="topic-list" />
+                      <datalist id="topic-list">
+                        <select id="room_topic">
+                          <option value="">Select your topic</option>
+                          <option value="Python">Python</option>
+                          <option value="Django">Django</option>
+                        </select>
+                      </datalist>
+
+                    </div> -->
+
+
+                    <div class="form__action">
+                        <a class="btn btn--dark" href="{% url 'section-detail' %}">Cancel</a>
+                        <button class="btn btn--main" type="submit">Submit</button>
+
+                        <!--                        <form id="my-form" method="post" action="{% url 'process' section.id %}">-->
+
+                        <!--                            {% csrf_token %}-->
+
+                        <!--                            <label for="my-select">Blocks:</label>-->
+                        <!--                            <select id="my-select" class="1-100" name="option" onchange="submitAndRedirect()"></select>-->
+                        <!--                            <button type="submit" style="display:none;"></button>-->
+                        <!--                        </form>-->
+
+
+                </form>
+                <form method="GET" action="{% url 'process' section.id %}" id="my-form">
+
+                    <!--                    <label for="blocks">Enter number of Blocks :</label>-->
+                    <!--                    <input type="number" id="blocks" name="blocks">-->
+                    <label for="blocks">Blocks:</label> <br>
+                    <select id="blocks" class="1-100" name="blocks"></select>
+<!--                    <label for="Score">Score:</label>-->
+                    <input type="hidden" id="Score" name="score" required value="10">
+                    <button class="btn btn&#45;&#45;danger" type="submit">Process</button>
+                    <!--                    <a class="btn btn&#45;&#45;danger" href="{% url 'process' section.id %}" id="submit-link">Process</a>-->
+                </form>
+
+
+                <!--                <form id="my-form" method="get" action="">-->
+                <!--                    {% csrf_token %}-->
+                <!--                    <select id="mySelect" name="mySelect">-->
+                <!--                        <option value="option1">Option 1</option>-->
+                <!--                        <option value="option2">Option 2</option>-->
+                <!--                        <option value="option3">Option 3</option>-->
+                <!--                    </select>-->
+                <!--                    <button type="submit">Submit</button>-->
+                <!--                </form>-->
+                <!--                <a href="{% url 'process' section.id %}">Go to form</a>-->
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="image-container">
+        {% for image in images %}
+
+            <img src="{{ image.image.url }}" alt="{{ image.id }}">
+
+        <a href="{% url 'delete_image' section.id image.id %}">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                 viewBox="0 0 32 32">
+                <title>remove</title>
+                <path
+                        d="M27.314 6.019l-1.333-1.333-9.98 9.981-9.981-9.981-1.333 1.333 9.981 9.981-9.981 9.98 1.333 1.333 9.981-9.98 9.98 9.98 1.333-1.333-9.98-9.98 9.98-9.981z"
+                ></path>
+            </svg>
+        </a>
+        {% endfor %}
+    </div>
+
+
+
+
+    <script>
+$(function(){
+    var $select = $(".1-100");
+    for (i=1;i<=20;i++){
+        $select.append($('<option></option>').val(i).html(i))
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+    <!--  <script>-->
+    <!--    function submitForm() {-->
+    <!--        var form = document.getElementById("myForm");-->
+    <!--        form.action = "{% url 'process' section.id %}";-->
+    <!--        form.method = "POST";-->
+    <!--        form.submit();-->
+    <!--    }-->
+    <!--</script>-->
+
+
+</main>
+{% endblock %}
