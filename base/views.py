@@ -76,8 +76,8 @@ def deleteSection(request, pk):
 #     return render(request, 'base/delete_image.html', context)
 
 
-def delete_image(request, pk, image_id):
-    section = get_object_or_404(Section, id=pk)
+def delete_image(request, image_id):
+    section = get_object_or_404(Section, id=25)
     image = get_object_or_404(Image, id=image_id, section=section)
 
     # Delete the image file from the file system.
@@ -87,7 +87,7 @@ def delete_image(request, pk, image_id):
     image.delete()
 
     # Redirect the user to the section detail page.
-    return redirect('section-detail', pk=section.id)
+    return redirect('section-detail')
 
 
 
