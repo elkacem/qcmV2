@@ -720,25 +720,25 @@ def process(request, pk):
         for (base, student) in zip(correct_ans, data['answers']):
             datasets[idx]['answers_check'].append(base == student)
 
-    for data in datasets:
-        print('this is data', data)
-        (_, count) = np.unique(data['answers_check'], return_counts=True)
-        print('this is count', (_, count))
-        print('this is count 0', (_, count)[0])
-
-        print(len(count))
-
-        if len(count) == 2:
-            # print('its count one',count[1])
-            data['correct'] = count[1]
-            data['incorrect'] = count[0]
-        if len(count) == 1:
-            if (_, count)[0][0] == False:
-                data['incorrect'] = count[0]
-                data['correct'] = 0
-            else:
-                data['correct'] = count[0]
-                data['incorrect'] = 0
+    # for data in datasets:
+    #     print('this is data', data)
+    #     (_, count) = np.unique(data['answers_check'], return_counts=True)
+    #     print('this is count', (_, count))
+    #     print('this is count 0', (_, count)[0])
+    #
+    #     print(len(count))
+    #
+    #     if len(count) == 2:
+    #         # print('its count one',count[1])
+    #         data['correct'] = count[1]
+    #         data['incorrect'] = count[0]
+    #     if len(count) == 1:
+    #         if (_, count)[0][0] == False:
+    #             data['incorrect'] = count[0]
+    #             data['correct'] = 0
+    #         else:
+    #             data['correct'] = count[0]
+    #             data['incorrect'] = 0
 
     for i in datasets:
         print(i['answers'])
@@ -757,7 +757,7 @@ def process(request, pk):
         i['answers'] = [i['answers'][j:j + 5] for j in range(0, len(i['answers']), 5)]
 
     df = pd.DataFrame(datasets)
-    df['pass'] = ["Pass" if d >= int(score) else "Fail" for d in df['correct']]
+    # df['pass'] = ["Pass" if d >= int(score) else "Fail" for d in df['correct']]
 
     # excel = df.to_excel('out.xlsx', index=False)
     #
